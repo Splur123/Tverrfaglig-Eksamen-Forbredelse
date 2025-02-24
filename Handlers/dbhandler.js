@@ -1,12 +1,11 @@
 const mongoose = require('mongoose');
 let db = null;
 
-connectToDB('mongodb://10.12.1.115','test')
 
-async function connectToDB(mongoString, dbName) {
+async function connectDB(mongoString, dbName) {
     try {
         console.log('attempting connection to the database:', {mongoString});
-        db = await mongoose.connect(mongoString, {dbName});
+        db = await mongoose.connect(mongoString, dbName);
         if (db){
             console.info('Connected to ', {db});
         }
@@ -14,3 +13,7 @@ async function connectToDB(mongoString, dbName) {
         console.error('error connecting to the database');
     }
 }
+
+module.exports={
+    connectDB
+};

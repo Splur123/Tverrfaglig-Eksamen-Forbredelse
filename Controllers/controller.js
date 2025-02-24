@@ -5,5 +5,5 @@ const renderindex = ('/index', (req, res, next)=>{
 });
 
 module.exports={
-    renderindex,
+    renderindex
 };

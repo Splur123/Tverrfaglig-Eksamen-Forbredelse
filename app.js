@@ -16,4 +16,5 @@ app.use(router);
 const PORT = process.env.PORT || 4200;
 app.listen(PORT, () => {
     console.log('Server arghing on https://localhost:' + PORT);
+    connectDB('mongodb://10.12.1.66','local')
 });

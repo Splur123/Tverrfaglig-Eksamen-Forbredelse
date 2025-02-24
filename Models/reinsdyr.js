@@ -7,4 +7,4 @@ const reinSchema = new mongoose.Schema({
     fødselsdato: Date
 });
 
-module.exports = mongoose.model("eier", reinSchema);
+module.exports = mongoose.model("rein", reinSchema);
