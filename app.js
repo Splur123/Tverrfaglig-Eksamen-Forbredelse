@@ -21,5 +21,5 @@ app.get('/', (req, res) => {
 const PORT = process.env.PORT || 4200;
 app.listen(PORT, () => {
     console.log('Server arghing on https://localhost:' + PORT);
-    connectDB('mongodb://localhost:27017/', {});
+    connectDB('mongodb://localhost:27017/ReinsdyrDatabase');
 });
