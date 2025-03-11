@@ -7,27 +7,27 @@ const authController = {
     loggedIn: false,
 
 
-    // authorize: async (req, res) => {
-    //         const existingEier = eier.findOne({req.body.epost});
-    //         console.log('authenticating...')
+    authorize: async (req, res) => {
+            const existingEier = eier.findOne({epost: req.body.epost});
+            console.log('authenticating...')
 
-    //         try {
-    //         if (existingEier)
-    //             {
-    //         loggedIn = true;
-    //         console.log('user authorized');
-    //         console.log(existingEier);
+            try {
+            if (existingEier)
+                {
+            loggedIn = true;
+            console.log('user authorized');
+            console.log(existingEier);
 
-    //         }
-    //         else {
-    //             console.log("couldn't find account");
-    //         }
-    //     }
+            }
+            else {
+                console.log("couldn't find account");
+            }
+        }
 
-    //         catch (error) {
-    //             console.log(error)
-    //         }
-    // },
+            catch (error) {
+                console.log(error)
+            }
+    },
 
     renderRegister: (req, res) => {
         res.render('register');
@@ -38,7 +38,7 @@ const authController = {
 
         try {
             if (req.body.passord === req.body.gjentaPassord
-                && req.body.epost != eier.findOne({epost})
+                && eier.findOne({epost: req.body.epost} != req.body.epost)
             ){
                 console.log('ditt passord er ikke cringe');
 
@@ -57,7 +57,7 @@ const authController = {
                 res.status(201).send('Owner registered');
                 }
             else {
-                console.log('ditt passord er cringe');
+                res.status(201).send('User already exists');
             }
         }
         
@@ -74,6 +74,7 @@ const authController = {
         const existingEier = eier.findOne({epost} = req.body);
         try {
             console.log('fetching login information');
+            authController.authorize()
         }
         
         catch (error) {
