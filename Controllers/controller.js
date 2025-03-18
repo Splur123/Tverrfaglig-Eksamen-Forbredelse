@@ -1,44 +1,27 @@
 const express = require('express');
 const eier = require('../Models/eier');
 const { receiveMessageOnPort } = require('worker_threads');
+const { userInfo } = require('os');
+const reinsdyr = require('../Models/reinsdyr');
 
 
 const authController = {
     loggedIn: false,
+    currentEier: eier,
 
-
-    authorize: async (req, res) => {
-            const existingEier = eier.findOne({epost: req.body.epost});
-            console.log('authenticating...')
-
-            try {
-            if (existingEier)
-                {
-            loggedIn = true;
-            console.log('user authorized');
-            console.log(existingEier);
-
-            }
-            else {
-                console.log("couldn't find account");
-            }
-        }
-
-            catch (error) {
-                console.log(error)
-            }
+    renderUser: (req, res) => {
+        res.render('user');
     },
 
     renderRegister: (req, res) => {
         res.render('register');
-    
     },
 
     register: async (req, res) => {
 
         try {
             if (req.body.passord === req.body.gjentaPassord
-                && eier.findOne({epost: req.body.epost} != req.body.epost)
+                && !eier.findOne({epost: req.body.epost})
             ){
                 console.log('ditt passord er ikke cringe');
 
@@ -52,9 +35,10 @@ const authController = {
                 });
     
                 await nyEier.save();
+                this.currentEier = nyEier
                 console.log('Eier registrert:', nyEier);
-                
-                res.status(201).send('Owner registered');
+                loggedIn = true;
+                res.render('index')
                 }
             else {
                 res.status(201).send('User already exists');
@@ -71,16 +55,60 @@ const authController = {
     },
 
     login: async (req, res) => {
-        const existingEier = eier.findOne({epost} = req.body);
-        try {
-            console.log('fetching login information');
-            authController.authorize()
+        const existingEier = eier.findOne({epost: req.body.epost});
+            console.log('authenticating...')
+
+            try {
+            if (req.body.passord === existingEier.passord &&
+                req.body.epost === existingEier.epost &&
+                req.body.navn === existingEier.navn
+            ){
+            loggedIn = true;
+            this.currentEier = existingEier
+            console.log(existingEier);
+            res.render('index')
+            }
+            else {
+                res.status(201).send("couldn't find account");
+            }
         }
+
+            catch (error) {
+                console.log(error)
+            }
+        },
+
+        renderReinRegister: (req, res) => {
+            res.render('reinRegister');
+        },
+
+        reinRegister: async (req, res) => {
+
+            try {
+                if (!reinsdyr.findOne({serienummer: req.body.serienummer})
+                ){
+                    console.log('ditt passord er ikke cringe');
+    
+                    const nyRein = new reinsdyr({
+                        navn: req.body.navn,
+                        serienummer: req.body.serienummer,
+                        flokk: req.body.flokk,
+                        fødselsdato: req.body.fødselsdato,
+                    });
         
-        catch (error) {
-            console.log(error);
+                    await nyRein.save();
+                    console.log('Reinsdyr Registrert registrert:', nyRein);
+                    res.render('index')
+                    }
+                else {
+                    res.status(201).send('Reindeer already exists');
+                }
+            }
+            
+            catch (error) {
+                    console.log(error);
+                }
         }
-    }
-};
+    };
 
 module.exports = authController;

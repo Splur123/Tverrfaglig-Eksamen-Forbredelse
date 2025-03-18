@@ -1,0 +1,13 @@
+<%- include('partials/head') %>
+
+<h1>Registrer et Reinsdyr!</h1>
+
+<form action="/auth/reinRegister" method="POST">
+    <input type="text" name="navn" placeholder="Navn">
+    <input type="number" name="serienummer" placeholder="Serienummer">
+    <input type="text" name="flokk" placeholder="Flokk">
+    <input type="date" name="fødselsdato" placeholder="Fødselsdato">
+    <input type="submit" name="reinRegistrer" id="Registrer Reinsdyr">
+</form>
+
+<%- include('partials/foot') %>
