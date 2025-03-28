@@ -15,11 +15,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/auth', authRoutes);
 
 app.get('/', (req, res) => {
-    res.render('index')
+    res.render('index');
 });
 
 const PORT = process.env.PORT || 4200;
 app.listen(PORT, () => {
-    console.log('Server arghing on https://localhost:' + PORT);
+    console.log('Server arghing on ' + PORT);
     connectDB('mongodb://localhost:27017/ReinsdyrDatabase');
 });

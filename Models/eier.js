@@ -14,7 +14,7 @@ const eierSchema = new mongoose.Schema(
 // encrypt before saving
 eierSchema.pre('save', async function(next){
     if (!this.isModified('passord')){
-        next()
+        next();
     };
     this.passord = await bcrypt.hash(this.passord, 10);
 });

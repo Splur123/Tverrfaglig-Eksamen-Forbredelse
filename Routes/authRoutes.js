@@ -8,8 +8,8 @@ router.get('/reinregister', authController.renderReinRegister);
 router.get('/login', authController.renderLogin);
 router.get('/user', authController.renderUser);
 
-router.post('/register', authController.register)
-router.post('/reinregister', authController.reinRegister)
-router.post('/login', authController.login)
+router.post('/register', authController.register);
+router.post('/reinregister', authController.reinRegister);
+router.post('/login', authController.login);
 
 module.exports = router;
